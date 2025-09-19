@@ -6,27 +6,22 @@ const Product = new Schema({
     type: String,
     required: true,
     unique: true,
-    default: uuid(),
+    default: uuid,
   },
   name: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
   price: {
     type: Number,
-    required: true,
   },
   category: {
     type: String,
-    required: true,
   },
   image1: {
     type: String,
-    required: true,
   },
   image2: {
     type: String,
@@ -39,11 +34,14 @@ const Product = new Schema({
   },
   size: {
     type: [String],
-    required: true,
     enum: ["S", "M", "L", "XL", "XXL"],
   },
   color: {
     type: [String],
+  },
+  rating: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,

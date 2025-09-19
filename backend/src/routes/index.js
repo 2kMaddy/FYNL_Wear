@@ -1,9 +1,9 @@
 import { Router } from "express";
-import productRouter from "./productRouter";
+import productRoutes from "./productRoutes.js";
 
 const appRouter = Router();
 
 // Primary routes
-appRouter.use("/product", productRouter);
+appRouter.use("/product", productRoutes);
 
 export default appRouter;

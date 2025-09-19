@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
+import appRouter from "./routes/index.js";
 
 // config
 config();

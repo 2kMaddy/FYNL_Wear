@@ -1,4 +1,4 @@
-import { connect, disconnect } from "mongodb";
+import { connect, disconnect } from "mongoose";
 
 export async function connectToDatabase() {
   try {
