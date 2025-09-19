@@ -45,8 +45,7 @@ export const deleteAllProducts = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      error,
-      s,
+      error: error.message,
     });
   }
 };

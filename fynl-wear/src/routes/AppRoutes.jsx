@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Products from "../pages/products";
+import UserLayout from "../layout/UserLayout";
+import Products from "../pages/Products.jsx";
 
 const AppRoutes = createBrowserRouter([
   {
     path: "/",
+    element: <UserLayout />,
     children: [
       {
         path: "products",

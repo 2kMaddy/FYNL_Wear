@@ -1,3 +1,3 @@
 import api from "./api";
 
-export const getProducts = async () => api.get("/get-products");
+export const getProducts = () => api.get("product/get-products");
