@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 import priceFormatter from "../utils/priceFormatter";
-import WithoutBg from "./Button";
+import { ButtonNoBG } from "./Button";
 
 const ProductCard = (props) => {
   const { name, image1, price, rating, category, discountPer, discountPrice } =
@@ -9,7 +9,7 @@ const ProductCard = (props) => {
   return (
     <div className="w-full">
       <div>
-        <img src={image1} className="w-full md:h-[330px]" />
+        <img src={image1} className="w-full md:h-[370px]" />
       </div>
       <div className="flex flex-row justify-between items-start mt-3 text-[#333]">
         <div>
@@ -31,7 +31,7 @@ const ProductCard = (props) => {
         </div>
       </div>
       <div className="w-full mt-3">
-        <WithoutBg text="Add to cart" />
+        <ButtonNoBG text="Add to cart" />
       </div>
     </div>
   );

@@ -1,12 +1,22 @@
-const WithoutBg = (props) => {
+export const ButtonNoBG = ({ text, isDisabled = false, width = "w-full" }) => {
   return (
     <button
+      disabled={isDisabled}
       type="button"
-      className="w-full text-[#8a64bb] border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 hover:bg-[#8a64bb] hover:text-white hover:cursor-pointer"
+      className={`${width} text-[#8a64bb] border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 hover:bg-[#8a64bb] hover:text-white hover:cursor-pointer disabled:text-gray-300 disabled:cursor-not-allowed disabled:bg-white disabled:border-gray-300`}
     >
-      {props.text}
+      {text}
     </button>
   );
 };
 
-export default WithoutBg;
+export const ButtonBG = ({ text }) => {
+  return (
+    <button
+      type="button"
+      className="border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 bg-[#8a64bb] text-white cursor-pointer hover:bg-[#563b79]"
+    >
+      {text}
+    </button>
+  );
+};

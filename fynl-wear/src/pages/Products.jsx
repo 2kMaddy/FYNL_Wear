@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../features/productSlice";
 import ProductCard from "../components/ProductCard";
-import SearchBar from "../components/SearchBar";
 import Sort from "../components/Sort";
 import productSort from "../constants/productSort";
+import categorySort from "../constants/categorySort";
+import Pagination from "../components/Pagination";
 
 const Products = () => {
   const dispatch = useDispatch();
 
   // use states
-  const [searchKey, setSearchKey] = useState("");
 
   // access state values
   const products = useSelector((state) => state.product.products);
@@ -33,19 +33,13 @@ const Products = () => {
 
   return (
     <div className="flex flex-col gap-5 p-2 lg:p-5 max-w-[1440px] m-auto">
-      {/* Search & Sort options */}
-      <div className="w-full flex">
-        {/* Search bar */}
-        {/* <div className="w-full md:w-[50%]">
-          <SearchBar
-            placeHolder="Search Product"
-            searcFunc=""
-            onChangeFunc={handleSetSearchKey}
-          />
-        </div> */}
-        {/* Sort option */}
+      <div className="w-full gap-4 hidden md:flex">
+        {/* Sort and Filters */}
         <div>
-          <Sort sortValues={productSort} />
+          <Sort sortValues={productSort} className="w-[100px]" />
+        </div>
+        <div>
+          <Sort sortValues={categorySort} />
         </div>
       </div>
       {/* product cards list */}
@@ -59,6 +53,10 @@ const Products = () => {
           </li>
         ))}
       </ul>
+      {/* Pagination */}
+      <div className="w-full flex justify-center items-center mt-4">
+        <Pagination totalPage={10} currentPage={1} />
+      </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const Sort = (props) => {
 
   return (
     <select
-      className="border border-[#af5cf7] rounded-sm text-[#333] text-[14px] px-1 py-1 outline-0"
+      className="px-1 py-1 outline-0 text-[#333] text-[16px] font-semibold"
       value={selectedSort}
       onChange={(e) => setSelectedSort(e.target.value)}
     >
