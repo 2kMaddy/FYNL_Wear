@@ -1,3 +1,4 @@
 import api from "./api";
 
-export const getProducts = () => api.get("product/get-products");
+export const getProducts = (category, sortBy) =>
+  api.get(`product/get-products?category=${category}&sortBy=${sortBy}`);

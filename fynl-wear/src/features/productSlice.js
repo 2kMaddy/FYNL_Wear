@@ -4,9 +4,9 @@ import { getProducts } from "../services/productServices";
 // API call for fetch all products
 export const fetchAllProducts = createAsyncThunk(
   "/products/getProducts",
-  async (_, { rejectWithValue }) => {
+  async ({ category, sortBy }, { rejectWithValue }) => {
     try {
-      const response = await getProducts();
+      const response = await getProducts(category, sortBy);
       return response.data;
     } catch (error) {
       return rejectWithValue(

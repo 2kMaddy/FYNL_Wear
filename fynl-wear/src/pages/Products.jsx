@@ -6,11 +6,15 @@ import Sort from "../components/Sort";
 import productSort from "../constants/productSort";
 import categorySort from "../constants/categorySort";
 import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // use states
+  const [sortValue, setSortValue] = useState("");
+  const [category, setCategory] = useState("");
 
   // access state values
   const products = useSelector((state) => state.product.products);
@@ -18,17 +22,21 @@ const Products = () => {
   // action after page render
   useEffect(() => {
     handleGetProducts();
-  }, []);
+  }, [category, sortValue]);
 
   // get all products handler function
   const handleGetProducts = async () => {
-    await dispatch(fetchAllProducts());
+    console.log(category);
+    await dispatch(fetchAllProducts({ category, sortBy: sortValue }));
   };
 
-  // functions
-  const handleSetSearchKey = (value) => {
-    setSearchKey(value);
-    console.log(value);
+  // handler functions
+  const handleSortBy = (value) => {
+    setSortValue(value);
+  };
+
+  const handleCategory = (value) => {
+    setCategory(value);
   };
 
   return (
@@ -36,10 +44,14 @@ const Products = () => {
       <div className="w-full gap-4 hidden md:flex">
         {/* Sort and Filters */}
         <div>
-          <Sort sortValues={productSort} className="w-[100px]" />
+          <Sort
+            sortValues={productSort}
+            className="w-[100px]"
+            onChangeHandler={handleSortBy}
+          />
         </div>
         <div>
-          <Sort sortValues={categorySort} />
+          <Sort sortValues={categorySort} onChangeHandler={handleCategory} />
         </div>
       </div>
       {/* product cards list */}

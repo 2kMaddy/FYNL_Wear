@@ -13,7 +13,6 @@ const Pagination = (props) => {
     startPage = 1;
     endPage = Math.min(endPage, totalPage);
   }
-  console.log(endPage);
 
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
