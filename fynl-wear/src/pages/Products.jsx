@@ -7,6 +7,7 @@ import Sort from "../components/Sort";
 import productSort from "../constants/productSort";
 import categorySort from "../constants/categorySort";
 import Pagination from "../components/Pagination";
+import { PrimaryLoader } from "../components/Loader";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Products = () => {
   // access state values
   const products = useSelector((state) => state.product.products);
   const totalPage = useSelector((state) => state.product.totalPage);
+  const isLoading = useSelector((state) => state.product.loading);
 
   // action after page render
   useEffect(() => {
@@ -58,7 +60,7 @@ const Products = () => {
   return (
     <div
       className="flex flex-col gap-5 p-2 lg:p-5 max-w-[1440px] m-auto
-    bg-purple-100
+    bg-purple-100 min-h-dvh
     "
     >
       <div className="w-full gap-4 hidden md:flex">
@@ -95,6 +97,7 @@ const Products = () => {
           setPage={handleCurrentPage}
         />
       </div>
+      {isLoading && <PrimaryLoader />}
     </div>
   );
 };

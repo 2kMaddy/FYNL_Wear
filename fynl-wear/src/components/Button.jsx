@@ -1,3 +1,6 @@
+import { IoMdArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+
 export const ButtonNoBG = ({
   text,
   isDisabled = false,
@@ -16,13 +19,26 @@ export const ButtonNoBG = ({
   );
 };
 
-export const ButtonBG = ({ text }) => {
+export const ButtonBG = ({ text, width = "w-fit" }) => {
   return (
     <button
       type="button"
-      className="border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 bg-[#8a64bb] text-white cursor-pointer hover:bg-[#563b79]"
+      className={`${width} border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 bg-[#664a8b] text-white cursor-pointer hover:bg-[#563b79]`}
     >
       {text}
+    </button>
+  );
+};
+
+export const BackButton = () => {
+  const navigate = useNavigate();
+  return (
+    <button
+      type="button"
+      onClick={() => navigate(-1)}
+      className="font-semibold text-3xl cursor-pointer"
+    >
+      <IoMdArrowBack />
     </button>
   );
 };
