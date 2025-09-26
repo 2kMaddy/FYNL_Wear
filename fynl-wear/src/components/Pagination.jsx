@@ -1,9 +1,9 @@
 import { ButtonNoBG, ButtonBG } from "./Button";
 
 const Pagination = (props) => {
-  const { currentPage, totalPage } = props;
+  const { currentPage, totalPage, setPage } = props;
   const maxVisible = 3;
-  const half = Math.ceil(maxVisible / 2);
+  const half = Math.floor(maxVisible / 2);
 
   const pages = [];
   let startPage = currentPage - half;
@@ -11,7 +11,10 @@ const Pagination = (props) => {
 
   if (startPage < 1) {
     startPage = 1;
-    endPage = Math.min(endPage, totalPage);
+  }
+
+  if (totalPage < endPage) {
+    endPage = totalPage;
   }
 
   for (let i = startPage; i <= endPage; i++) {
@@ -20,7 +23,12 @@ const Pagination = (props) => {
 
   return (
     <div className="flex items-center gap-2">
-      <ButtonNoBG text={"<<"} isDisabled={currentPage < 2} width="w-fit" />
+      <ButtonNoBG
+        text={"<<"}
+        isDisabled={currentPage < 2}
+        width="w-fit"
+        onClick={() => setPage("dec")}
+      />
 
       <ul className="flex justify-center items-center gap-2 flex-wrap">
         {pages.map((each) => (
@@ -28,7 +36,11 @@ const Pagination = (props) => {
             {currentPage === each ? (
               <ButtonBG text={each} />
             ) : (
-              <ButtonNoBG text={each} width="w-fit" />
+              <ButtonNoBG
+                text={each}
+                width="w-fit"
+                onClick={() => setPage(each)}
+              />
             )}
           </li>
         ))}
@@ -38,6 +50,7 @@ const Pagination = (props) => {
         text={"Next"}
         isDisabled={currentPage === totalPage}
         width="w-fit"
+        onClick={() => setPage("inc")}
       />
     </div>
   );

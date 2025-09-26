@@ -36,8 +36,10 @@ export const deleteAllProducts = async (req, res) => {
 // User activities
 export const getProducts = async (req, res) => {
   try {
-    const { sortBy, category } = req.query;
-    console.log(category);
+    const { sortBy, category, page, limit } = req.query;
+
+    const currentPage = page || 1;
+    const skip = (currentPage - 1) * limit;
 
     let query = {};
     if (sortBy === "oldest") {
@@ -59,18 +61,53 @@ export const getProducts = async (req, res) => {
       findQuery.category = category;
     }
 
-    const products = await Product.find(findQuery).sort(query);
+    const products = await Product.find(findQuery)
+      .sort(query)
+      .skip(skip)
+      .limit(limit);
+
+    const totalCount = await Product.countDocuments(findQuery);
+    const totalPage = Math.ceil(totalCount / limit);
+
     return res.status(200).json({
       success: true,
       message: "Products fetched successfully",
-      totalProducts: products.length,
+      totalCount,
       data: products,
+      totalPage,
+      currentPage,
     });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
       success: false,
       message: "Internal error",
+      error: error.message,
+    });
+  }
+};
+
+export const getProductById = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findOne({ productId });
+
+    if (!product) {
+      res.status(400).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Product fetched successfully",
+      data: product,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: "Fetching product failed",
       error: error.message,
     });
   }
