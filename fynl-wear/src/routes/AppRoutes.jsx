@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 import Products from "../pages/Products.jsx";
 import ProductDetail from "../pages/ProductDetail.jsx";
+import AuthForm from "../components/AuthForm.jsx";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -15,6 +16,14 @@ const AppRoutes = createBrowserRouter([
       {
         path: "product/:productId",
         element: <ProductDetail />,
+      },
+      {
+        path: "login",
+        element: <AuthForm formType="login" />,
+      },
+      {
+        path: "signup",
+        element: <AuthForm formType="signup" />,
       },
     ],
   },
