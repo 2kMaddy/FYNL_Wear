@@ -1,19 +1,27 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { FiShoppingCart, FiUser } from "react-icons/fi";
 import { IoMdLogOut } from "react-icons/io";
-import { ButtonNoBG } from "./Button";
+import { fetchLogOutUser } from "../features/authSlice";
+import { ButtonBG, ButtonNoBG } from "./Button";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
 
+  const handleLogoutUser = async () => {
+    await dispatch(fetchLogOutUser());
+    setIsNavOpen(false);
+  };
+
   const NavItems = () => {
     return (
-      <div className="flex flex-col md:flex-row gap-0 md:gap-4 text-left w-full divide-y divide-gray-300">
+      <div className="flex flex-col md:flex-row gap-0 md:gap-4 text-left w-full divide-y divide-gray-300 md:divide-none lg:ml-8">
         <NavLink
           to="/"
           className="relative inline-block text-black after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#993df5] after:transition-transform after:duration-300 after:origin-left after:scale-x-0 hover:after:scale-x-80 hover:text-[#993df5] py-2 md:p-0"
@@ -44,7 +52,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full flex flex-row font-semibold max-h-[66px]">
+      <nav className="w-full flex flex-row font-semibold max-h-[70px]">
         <div className="flex flex-row justify-between md:items-center w-full p-4 bg-white shadow-md">
           <div>
             <NavLink to="/">
@@ -92,6 +100,7 @@ const Navbar = () => {
               <div>
                 <button
                   type="button"
+                  onClick={handleLogoutUser}
                   className="cursor-pointer text-[18px] p-2   hover:text-[#993df5]  transition-colors duration-300 flex items-center gap-2"
                 >
                   <IoMdLogOut />
@@ -102,20 +111,10 @@ const Navbar = () => {
           ) : (
             <div className="flex flex-row gap-4">
               <NavLink to="/login">
-                <button
-                  type="button"
-                  className="cursor-pointer w-24 border border-[#8f49ff] bg-[#8f49ff] text-white rounded-2xl p-2 pl-3 pr-3 hover:bg-[#5203a1] transition-colors duration-300"
-                >
-                  Login
-                </button>
+                <ButtonBG text={"Login"} />
               </NavLink>
               <NavLink to="/signup">
-                <button
-                  type="button"
-                  className="cursor-pointer w-24 text-[#8f49ff] border border-[#8f49ff] rounded-2xl p-2 pl-3 pr-3 hover:bg-[#993df5] hover:text-white hover:border-[#993df5] transition-colors duration-300"
-                >
-                  Signup
-                </button>
+                <ButtonNoBG text={"Signup"} />
               </NavLink>
             </div>
           )}
@@ -123,7 +122,10 @@ const Navbar = () => {
       </nav>
 
       {isNavOpen && (
-        <div className="w-full flex md:hidden absolute bg-white p-4 font-semibold">
+        <div
+          className="w-full flex md:hidden absolute bg-white p-4 font-semibold"
+          onClick={() => setIsNavOpen(false)}
+        >
           <NavItems />
         </div>
       )}

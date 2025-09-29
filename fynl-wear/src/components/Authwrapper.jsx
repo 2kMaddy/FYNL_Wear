@@ -14,7 +14,7 @@ const AuthWrapper = ({ children }) => {
       setIsLoading(false);
     };
     checkAuth();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));

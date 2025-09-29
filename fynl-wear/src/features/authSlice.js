@@ -3,6 +3,7 @@ import {
   createNewUser,
   logInUser,
   authoriseUser,
+  logOutUser,
 } from "../services/userServices";
 
 // Create user
@@ -46,6 +47,22 @@ export const fetchAuthoriseUser = createAsyncThunk(
       console.log(error.message);
       return rejectWithValue(
         error.response?.data?.message || "Authorise user failed"
+      );
+    }
+  }
+);
+
+// User logout
+export const fetchLogOutUser = createAsyncThunk(
+  "user/logOutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await logOutUser();
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Log out user failed"
       );
     }
   }
@@ -104,7 +121,17 @@ const authSlice = createSlice({
         state.error = null;
         state.isAuthenticated = true;
       })
-      .addCase(fetchAuthoriseUser.rejected, commonReject);
+      .addCase(fetchAuthoriseUser.rejected, commonReject)
+
+      // Log out user
+      .addCase(fetchLogOutUser.pending, commonPending)
+      .addCase(fetchLogOutUser.fulfilled, (state, action) => {
+        state.isAuthenticated = false;
+        state.user = {};
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(fetchLogOutUser.rejected, commonReject);
   },
 });
 

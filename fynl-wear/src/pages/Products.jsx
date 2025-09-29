@@ -67,7 +67,7 @@ const Products = () => {
       <div className="flex flex-row w-full my-4">
         <BackButton />
         <h1 className="font-semibold font-primary text-2xl text-[#333] m-auto">
-          Product Detail
+          Products List
         </h1>
       </div>
       <div className="w-full gap-4 hidden md:flex">
