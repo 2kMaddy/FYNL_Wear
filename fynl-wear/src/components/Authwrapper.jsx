@@ -18,7 +18,6 @@ const AuthWrapper = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-    console.log(user);
   }, [user]);
 
   if (isLoading) {

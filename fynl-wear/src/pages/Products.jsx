@@ -8,6 +8,7 @@ import productSort from "../constants/productSort";
 import categorySort from "../constants/categorySort";
 import Pagination from "../components/Pagination";
 import { PrimaryLoader } from "../components/Loader";
+import { BackButton } from "../components/Button";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -63,16 +64,22 @@ const Products = () => {
     bg-purple-100 min-h-dvh
     "
     >
+      <div className="flex flex-row w-full my-4">
+        <BackButton />
+        <h1 className="font-semibold font-primary text-2xl text-[#333] m-auto">
+          Product Detail
+        </h1>
+      </div>
       <div className="w-full gap-4 hidden md:flex">
         {/* Sort and Filters */}
-        <div>
+        <div className="bg-gray-300 rounded-2xl p-1 mr-5">
           <Sort
             sortValues={productSort}
             className="w-[100px]"
             onChangeHandler={handleSortBy}
           />
         </div>
-        <div>
+        <div className="bg-gray-300 rounded-2xl p-1 mr-5">
           <Sort sortValues={categorySort} onChangeHandler={handleCategory} />
         </div>
       </div>

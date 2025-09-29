@@ -36,7 +36,7 @@ export const BackButton = () => {
     <button
       type="button"
       onClick={() => navigate(-1)}
-      className="font-semibold text-3xl cursor-pointer"
+      className="font-semibold text-2xl cursor-pointer"
     >
       <IoMdArrowBack />
     </button>
