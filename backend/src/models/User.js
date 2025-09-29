@@ -1,17 +1,27 @@
 import mongoose, { Schema } from "mongoose";
 
-const UserSchema = new Schema({
-  name: {
+const UserSchema = mongoose.Schema({
+  email: {
     type: String,
     required: true,
+    unique: true,
   },
-  email: {
+  name: {
     type: String,
     required: true,
   },
   password: {
     type: String,
-    required: true,
+  },
+  resetToken: { type: String },
+  resetTokenExpire: { type: Date },
+  googleId: {
+    type: String,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
   },
   createdAt: {
     type: Date,

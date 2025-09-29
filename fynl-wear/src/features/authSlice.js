@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createNewUser, logInUser } from "../services/userServices";
+import {
+  createNewUser,
+  logInUser,
+  authoriseUser,
+} from "../services/userServices";
 
 // Create user
 export const fetchCreateUser = createAsyncThunk(
@@ -31,10 +35,27 @@ export const fetchLoginUser = createAsyncThunk(
   }
 );
 
+// authorise user
+export const fetchAuthoriseUser = createAsyncThunk(
+  "user/authoriseUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await authoriseUser();
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Authorise user failed"
+      );
+    }
+  }
+);
+
 const initialState = {
   user: {},
   error: null,
   loading: false,
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
@@ -46,11 +67,13 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
       state.user = {};
+      state.isAuthenticated = false;
     };
     const commonReject = (state, action) => {
       state.loading = false;
       state.error = action.payload;
       state.user = {};
+      state.isAuthenticated = false;
     };
     builder
       // Create user
@@ -59,6 +82,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.data;
         state.error = null;
+        state.isAuthenticated = true;
       })
       .addCase(fetchCreateUser.rejected, commonReject)
 
@@ -68,8 +92,19 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.data;
         state.error = null;
+        state.isAuthenticated = true;
       })
-      .addCase(fetchLoginUser.rejected, commonReject);
+      .addCase(fetchLoginUser.rejected, commonReject)
+
+      // Authorise user
+      .addCase(fetchAuthoriseUser.pending, commonPending)
+      .addCase(fetchAuthoriseUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.data;
+        state.error = null;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchAuthoriseUser.rejected, commonReject);
   },
 });
 

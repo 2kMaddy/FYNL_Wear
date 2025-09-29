@@ -9,3 +9,5 @@ export const createNewUser = (name, email, password) =>
 
 export const logInUser = (email, password) =>
   api.post("/user/login-user", { email, password });
+
+export const authoriseUser = () => api.get("/user/authorise-user");

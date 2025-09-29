@@ -73,6 +73,7 @@ export const loginUser = async (req, res) => {
         message: "User not found",
       });
     }
+
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
@@ -80,16 +81,55 @@ export const loginUser = async (req, res) => {
         message: "Invalid password",
       });
     }
+
+    const token = generateToken(user._id);
+
+    //   Set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     return res.status(200).json({
       success: true,
       message: "Login successful",
       data: user,
+      token: token,
     });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({
       success: false,
       message: "Failed to login",
+      error: error.message,
+    });
+  }
+};
+
+export const authoriseUser = async (req, res) => {
+  try {
+    const decoded = req.user;
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "User info fetched successfully",
+        data: user,
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to get user info",
       error: error.message,
     });
   }

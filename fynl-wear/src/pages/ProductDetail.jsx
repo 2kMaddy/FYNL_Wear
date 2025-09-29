@@ -95,8 +95,11 @@ const ProductDetail = () => {
                   {product.size[0]}
                 </p>
                 <div className="flex flex-row gap-2 mt-3">
-                  {product.size.map((each) => (
-                    <p className="py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white">
+                  {product.size.map((each, index) => (
+                    <p
+                      key={index}
+                      className="py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white"
+                    >
                       {each}
                     </p>
                   ))}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ButtonBG } from "./Button";
@@ -18,6 +18,14 @@ const AuthForm = ({ formType }) => {
 
   const user = useSelector((state) => state.auth.user);
   const error = useSelector((state) => state.auth.error);
+  const isLoading = useSelector((state) => state.auth.loading);
+  const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthorised) {
+      navigate("/products");
+    }
+  }, [isAuthorised]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -142,11 +150,11 @@ const AuthForm = ({ formType }) => {
           />
         </div>
       </form>
-      <div className="flex flex-row items-center w-full gap-1">
+      {/* <div className="flex flex-row items-center w-full gap-1">
         <hr className="w-full" />
         <span>OR</span>
         <hr className="w-full" />
-      </div>
+      </div> */}
     </div>
   );
 };
