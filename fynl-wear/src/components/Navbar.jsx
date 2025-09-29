@@ -6,11 +6,13 @@ import { FiShoppingCart, FiUser } from "react-icons/fi";
 import { IoMdLogOut } from "react-icons/io";
 import { fetchLogOutUser } from "../features/authSlice";
 import { ButtonBG, ButtonNoBG } from "./Button";
+import Popup from "./Popup";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
 
@@ -100,7 +102,7 @@ const Navbar = () => {
               <div>
                 <button
                   type="button"
-                  onClick={handleLogoutUser}
+                  onClick={() => setIsPopupOpen(true)}
                   className="cursor-pointer text-[18px] p-2   hover:text-[#993df5]  transition-colors duration-300 flex items-center gap-2"
                 >
                   <IoMdLogOut />
@@ -128,6 +130,14 @@ const Navbar = () => {
         >
           <NavItems />
         </div>
+      )}
+
+      {isPopupOpen && (
+        <Popup
+          message={"Are you sure you want to logout?"}
+          onClose={() => setIsPopupOpen(false)}
+          onClick={handleLogoutUser}
+        />
       )}
     </>
   );

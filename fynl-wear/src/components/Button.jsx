@@ -19,9 +19,15 @@ export const ButtonNoBG = ({
   );
 };
 
-export const ButtonBG = ({ text, width = "w-fit", btnType = "button" }) => {
+export const ButtonBG = ({
+  text,
+  width = "w-fit",
+  btnType = "button",
+  onClick,
+}) => {
   return (
     <button
+      onClick={onClick}
       type={btnType}
       className={`${width} text-[13px] md:text-[16px] border border-[#bba3db] rounded-3xl pl-4 pr-4 p-2 bg-[#664a8b] text-white cursor-pointer hover:bg-[#563b79]`}
     >
