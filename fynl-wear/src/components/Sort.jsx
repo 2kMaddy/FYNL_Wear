@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 const Sort = (props) => {
-  const { sortValues, onChangeHandler } = props;
-  const [selectedSort, setSelectedSort] = useState("");
+  const { sortValues, onChangeHandler, currentValue } = props;
+  const [selectedSort, setSelectedSort] = useState(currentValue || "");
 
   // handler for controlled input
   const sortHandler = (e) => {

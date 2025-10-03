@@ -20,7 +20,7 @@ const CartItem = new Schema({
 const Cart = new Schema({
   userId: {
     type: String,
-    // required: true,
+    required: true,
   },
   cartItems: [CartItem],
   createdAt: {

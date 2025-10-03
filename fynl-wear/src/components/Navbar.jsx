@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { FiShoppingCart, FiUser } from "react-icons/fi";
 import { IoMdLogOut } from "react-icons/io";
 import { fetchLogOutUser } from "../features/authSlice";
 import { ButtonBG, ButtonNoBG } from "./Button";
 import Popup from "./Popup";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  useEffect(() => {
+    setIsNavOpen(false);
+  }, [location]);
 
   const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
 

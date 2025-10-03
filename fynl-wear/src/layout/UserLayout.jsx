@@ -4,13 +4,15 @@ import ScrollToTop from "../components/ScrollToTop";
 
 const UserLayout = () => {
   return (
-    <>
+    <div>
       <ScrollToTop />
-      <Navbar />
+      <nav>
+        <Navbar />
+      </nav>
       <main>
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };
 
