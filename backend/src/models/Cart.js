@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, trusted } from "mongoose";
 
 const CartItem = new Schema({
   productId: {
@@ -10,6 +10,10 @@ const CartItem = new Schema({
     required: true,
     min: 1,
     default: 1,
+  },
+  size: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,

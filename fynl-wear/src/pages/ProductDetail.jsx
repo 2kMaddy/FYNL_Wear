@@ -6,11 +6,16 @@ import { FaStar } from "react-icons/fa";
 import priceFormatter from "../utils/priceFormatter";
 import { ButtonBG, ButtonNoBG, BackButton } from "../components/Button";
 import { PrimaryLoader } from "../components/Loader";
+import { useState } from "react";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
 
   const { productId } = useParams();
+
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
 
   const product = useSelector((state) => state.product.product);
   const isLoading = useSelector((state) => state.product.loading);
@@ -21,6 +26,14 @@ const ProductDetail = () => {
 
   const handleGetProductById = async () => {
     await dispatch(fetchProductById({ productId }));
+  };
+
+  const handleQuantity = (type) => {
+    if (type === "dec" && quantity > 1) {
+      setQuantity(quantity - 1);
+    } else if (type === "inc") {
+      setQuantity(quantity + 1);
+    }
   };
 
   return (
@@ -75,14 +88,17 @@ const ProductDetail = () => {
               <div className="mt-4">
                 <p>
                   <span className="font-semibold">Color: </span>
-                  {product.color[0]}
+                  {color || product.color[0]}
                 </p>
                 <div className="flex flex-row gap-2 mt-3">
                   {product.color.map((each, index) => (
                     <div
                       key={index}
                       style={{ backgroundColor: each || "gray" }}
-                      className="h-[30px] w-[30px] rounded-4xl border border-[#af5cf7]"
+                      className={`h-[30px] w-[30px] rounded-4xl border border-[#af5cf7] ${
+                        color === each ? "border-[#af5cf7]" : ""
+                      } cursor-pointer hover:bg-[#af5cf7]`}
+                      onClick={() => setColor(each)}
                     ></div>
                   ))}
                 </div>
@@ -92,13 +108,16 @@ const ProductDetail = () => {
               <div className="mt-4">
                 <p>
                   <span className="font-semibold">Size: </span>
-                  {product.size[0]}
+                  {size || product.size[0]}
                 </p>
                 <div className="flex flex-row gap-2 mt-3">
                   {product.size.map((each, index) => (
                     <p
                       key={index}
-                      className="py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white"
+                      className={`py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white ${
+                        size === each ? "bg-[#af5cf7] text-white" : ""
+                      }`}
+                      onClick={() => setSize(each)}
                     >
                       {each}
                     </p>
@@ -113,13 +132,15 @@ const ProductDetail = () => {
                   <button
                     type="button"
                     className="py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white"
+                    onClick={() => handleQuantity("dec")}
                   >
                     -
                   </button>
-                  <p className="px-4">1</p>
+                  <p className="px-4">{quantity}</p>
                   <button
                     type="button"
                     className="py-1 px-8 border border-[#af5cf7] cursor-pointer hover:bg-[#af5cf7] hover:text-white"
+                    onClick={() => handleQuantity("inc")}
                   >
                     +
                   </button>

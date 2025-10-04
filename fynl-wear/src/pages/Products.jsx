@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../features/productSlice";
-import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Sort from "../components/Sort";
 import productSort from "../constants/productSort";
@@ -104,9 +104,7 @@ const Products = () => {
       >
         {products.map((product) => (
           <li key={product.productId} className="w-full">
-            <NavLink to={`/product/${product.productId}`}>
-              <ProductCard product={product} />
-            </NavLink>
+            <ProductCard product={product} />
           </li>
         ))}
       </ul>
