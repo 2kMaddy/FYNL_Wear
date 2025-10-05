@@ -21,6 +21,7 @@ const Navbar = () => {
   }, [location]);
 
   const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const handleLogoutUser = async () => {
     await dispatch(fetchLogOutUser());
@@ -92,6 +93,9 @@ const Navbar = () => {
                 >
                   <div className="relative">
                     <FiShoppingCart />
+                    <p className="flex justify-center items-center absolute top-0 transform -translate-y-1/2 right-[-20%] text-white bg-red-600 rounded-4xl px-1 text-[11px] font-bold">
+                      {cartItems?.length !== 0 && cartItems?.length}
+                    </p>
                   </div>
                   <span className="text-[16px] hidden lg:block">Cart</span>
                 </button>

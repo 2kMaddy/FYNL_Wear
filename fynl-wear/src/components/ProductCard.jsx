@@ -9,11 +9,13 @@ const ProductCard = (props) => {
     name,
     image1,
     price,
+    size,
     rating,
     category,
     discountPer,
     discountPrice,
     productId,
+    color,
   } = props.product;
 
   const { addToCart } = useCartAction();
@@ -47,7 +49,12 @@ const ProductCard = (props) => {
         </div>
       </NavLink>
       <div className="w-full mt-3">
-        <ButtonNoBG text="Add to cart" onClick={() => addToCart(productId)} />
+        <ButtonNoBG
+          text="Add to cart"
+          onClick={() =>
+            addToCart(productId, 1, size[0] || "S", color[0] || "Not specified")
+          }
+        />
       </div>
     </div>
   );
