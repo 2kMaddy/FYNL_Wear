@@ -3,6 +3,7 @@ import UserLayout from "../layout/UserLayout";
 import Products from "../pages/Products.jsx";
 import ProductDetail from "../pages/ProductDetail.jsx";
 import AuthForm from "../components/AuthForm.jsx";
+import Cart from "../pages/Cart.jsx";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const AppRoutes = createBrowserRouter([
       {
         path: "signup",
         element: <AuthForm formType="signup" />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
     ],
   },

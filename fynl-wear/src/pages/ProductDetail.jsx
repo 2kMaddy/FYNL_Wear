@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchProductById } from "../features/productSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import priceFormatter from "../utils/priceFormatter";
 import { ButtonBG, ButtonNoBG, BackButton } from "../components/Button";
 import { PrimaryLoader } from "../components/Loader";
-import { useState } from "react";
+import useCartAction from "../hooks/useCartAction";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
 
+  const { addToCart } = useCartAction();
   const { productId } = useParams();
 
   const [size, setSize] = useState("");
@@ -149,7 +150,18 @@ const ProductDetail = () => {
 
               {/* Add to cart and Buy now button */}
               <div className="mt-9 flex gap-4">
-                <ButtonNoBG text="Add to Cart" width="w-[200px]" />
+                <ButtonNoBG
+                  text="Add to Cart"
+                  width="w-[200px]"
+                  onClick={() => {
+                    addToCart(
+                      product.productId,
+                      quantity,
+                      size || product.size[0],
+                      color || product.color[0]
+                    );
+                  }}
+                />
                 <ButtonBG text="Buy Now" width="w-[200px]" />
               </div>
             </div>
