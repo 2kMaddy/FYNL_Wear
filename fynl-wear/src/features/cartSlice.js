@@ -119,6 +119,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.cartItems = action.payload.data;
+        state.cartItems.forEach((each) => (each.checked = true));
       })
       .addCase(fetchGetCart.rejected, commonReject)
       // delete cart item
@@ -140,7 +141,7 @@ const cartSlice = createSlice({
         if (itemIndex !== -1) {
           state.cartItems[itemIndex].quantity = quantity;
         }
-        console.log(state.cartItems);
+        
       })
       .addCase(fetchUpdateCartItem.rejected, commonReject);
   },

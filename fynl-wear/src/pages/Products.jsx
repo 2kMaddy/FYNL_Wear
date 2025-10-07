@@ -79,7 +79,7 @@ const Products = () => {
           Products List
         </h1>
       </div>
-      <div className="w-full gap-4 hidden md:flex">
+      <div className="w-fit md:w-full gap-4 flex flex-col md:flex-row">
         {/* Sort and Filters */}
         <div className="bg-gray-300 rounded-2xl p-1 mr-5">
           <Sort
@@ -100,7 +100,7 @@ const Products = () => {
       {/* product cards list */}
       <ul
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4
-      gap-4 lg:gap-8"
+      gap-8 lg:gap-8"
       >
         {products.map((product) => (
           <li key={product.productId} className="w-full">

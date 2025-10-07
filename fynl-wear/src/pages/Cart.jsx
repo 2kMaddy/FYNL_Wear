@@ -4,30 +4,40 @@ import useCartAction from "../hooks/useCartAction";
 import { deleteCartItemState, fetchGetCart } from "../features/cartSlice";
 import priceFormatter from "../utils/priceFormatter";
 import { PrimaryLoader } from "../components/Loader";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ButtonBG } from "../components/Button";
 
 const Cart = () => {
+  // Hooks
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { deleteFromCart, updateCartItem } = useCartAction();
+
+  // Redux state
   const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isLoading = useSelector((state) => state.cart.loading);
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const error = useSelector((state) => state.cart.error);
 
+  // Local state
   const [selectedItems, setSelectedItems] = useState([]);
 
   // Fetch cart items on component mount
   useEffect(() => {
-    dispatch(fetchGetCart({ userId: user._id }));
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchGetCart({ userId: user._id }));
+    } else {
+      navigate("/login");
+    }
+  }, [dispatch, isAuthenticated]);
 
   // Update selected items when cartItems change
   useEffect(() => {
-    setSelectedItems(cartItems);
+    const checkedItems = cartItems.filter((item) => item.checked);
+    setSelectedItems(checkedItems);
   }, [cartItems]);
 
+  // Handlers
   const handleSelectedItems = (items) => {
     setSelectedItems((prev) => {
       if (prev.includes(items)) {
@@ -57,6 +67,19 @@ const Cart = () => {
     await updateCartItem(cartItemId, newQuantity);
   };
 
+  const handleCheckout = () => {
+    if (selectedItems.length === 0) {
+      alert("Please select at least one item to proceed to checkout.");
+      return;
+    }
+    if (!isAuthenticated) {
+      alert("Please login to proceed to checkout.");
+      return navigate("/login");
+    } else {
+      navigate("/place-order", { state: { selectedItems } });
+    }
+  };
+
   const subtotal = selectedItems?.reduce(
     (acc, item) => acc + Number(item?.product?.price) * item.quantity,
     0
@@ -80,26 +103,26 @@ const Cart = () => {
               <h2 className="font-semibold text-xl text-[#333] p-3 py-6">
                 My Cart ({cartItems.length}) items
               </h2>
+              <div className="p-3">
+                <input
+                  type="checkbox"
+                  id="selectAllItems"
+                  checked={selectedItems.length === cartItems.length}
+                  onChange={() => {
+                    if (selectedItems.length === cartItems.length) {
+                      setSelectedItems([]);
+                    } else {
+                      setSelectedItems(cartItems);
+                    }
+                  }}
+                />
+                <label htmlFor="selectAllItems" className="ml-4">
+                  {selectedItems.length === cartItems.length
+                    ? "Deselect All"
+                    : "Select All"}
+                </label>
+              </div>
               <ul className="divide-y divide-gray-400 flex flex-col">
-                <li>
-                  <input
-                    type="checkbox"
-                    id="selectAllItems"
-                    checked={selectedItems.length === cartItems.length}
-                    onChange={() => {
-                      if (selectedItems.length === cartItems.length) {
-                        setSelectedItems([]);
-                      } else {
-                        setSelectedItems(cartItems);
-                      }
-                    }}
-                  />
-                  <label htmlFor="selectAllItems" className="ml-4">
-                    {selectedItems.length === cartItems.length
-                      ? "Deselect All"
-                      : "Select All"}
-                  </label>
-                </li>
                 {cartItems.map((item) => (
                   <li
                     key={item._id}
@@ -228,7 +251,7 @@ const Cart = () => {
             <p className="text-gray-600 font-semibold">Total</p>
             <p className="font-bold">{priceFormatter(total)}</p>
           </div>
-          <ButtonBG text="Check out" width="w-full" />
+          <ButtonBG text="Check out" width="w-full" onClick={handleCheckout} />
         </div>
       </div>
     </div>

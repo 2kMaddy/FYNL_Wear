@@ -2,6 +2,7 @@ import { Router } from "express";
 import productRoutes from "./productRoutes.js";
 import cartRoutes from "./cartRoutes.js";
 import userRoutes from "./userRoutes.js";
+import addressRoutes from "./addressRoute.js";
 
 const appRouter = Router();
 
@@ -9,6 +10,6 @@ const appRouter = Router();
 appRouter.use("/product", productRoutes);
 appRouter.use("/cart", cartRoutes);
 appRouter.use("/user", userRoutes);
-
+appRouter.use("/address", addressRoutes);
 
 export default appRouter;
