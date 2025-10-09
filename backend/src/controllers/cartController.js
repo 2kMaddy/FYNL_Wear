@@ -64,7 +64,7 @@ export const getCartItem = async (req, res) => {
     const productIds = cart.cartItems.map((i) => i.productId);
     const products = await Product.find(
       { productId: { $in: productIds } },
-      "productId name image1 price"
+      "productId name image1 price discountPer discountPrice stock"
     );
 
     const productMap = new Map(products.map((p) => [p.productId, p]));

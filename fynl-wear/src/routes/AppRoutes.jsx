@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
+import Home from "../pages/Home.jsx";
 import Products from "../pages/Products.jsx";
 import ProductDetail from "../pages/ProductDetail.jsx";
 import AuthForm from "../components/AuthForm.jsx";
@@ -11,6 +12,10 @@ const AppRoutes = createBrowserRouter([
     path: "/",
     element: <UserLayout />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "products",
         element: <Products />,

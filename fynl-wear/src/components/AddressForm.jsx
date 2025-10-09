@@ -1,32 +1,17 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { ButtonBG } from "./Button";
-import { addAddress, getAddress } from "../services/addressServices";
+import { addAddress } from "../services/addressServices";
+import { useDispatch, useSelector } from "react-redux";
 
-const AddressForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    doorNo: "",
-    street: "",
-    city: "",
-    state: "",
-    pincode: "",
-    phone: "",
-  });
+const AddressForm = ({ isConfirmed }) => {
+  const [formData, setFormData] = useState({});
 
   const user = useSelector((state) => state.auth.user);
+  const shippingAddress = useSelector((state) => state.address.shippingAddress);
 
   useEffect(() => {
-    handleGetAddress();
-  }, []);
-
-  const handleGetAddress = async () => {
-    const response = await getAddress(user._id);
-    const { data } = response.data;
-    if (response.data.success) {
-      setFormData(data);
-    }
-  };
+    setFormData(shippingAddress);
+  }, [shippingAddress]);
 
   const handleFormData = (e) => {
     const { id, value } = e.target;
@@ -63,7 +48,7 @@ const AddressForm = () => {
     try {
       const response = await addAddress(address);
       if (response.data.success) {
-        alert("Address added successfully");
+        isConfirmed(true);
       }
     } catch (error) {
       console.log(error.message);
@@ -85,7 +70,7 @@ const AddressForm = () => {
           placeholder="Name"
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.name}
+          value={formData?.name}  
         />
         <label htmlFor="doorNo" className="mb-1 font-semibold text-gray-700">
           Door No
@@ -96,7 +81,7 @@ const AddressForm = () => {
           placeholder="Door No."
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.doorNo}
+          value={formData?.doorNo}
         />
 
         <label htmlFor="street" className="mb-1 font-semibold text-gray-700">
@@ -108,7 +93,7 @@ const AddressForm = () => {
           placeholder="Street"
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.street}
+          value={formData?.street}
         />
 
         <label htmlFor="city" className="mb-1 font-semibold text-gray-700">
@@ -120,7 +105,7 @@ const AddressForm = () => {
           id="city"
           className="outline-0 rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px]"
           onChange={handleFormData}
-          value={formData.city}
+          value={formData?.city}
         />
 
         <label htmlFor="state" className="mb-1 font-semibold text-gray-700">
@@ -132,7 +117,7 @@ const AddressForm = () => {
           id="state"
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.state}
+          value={formData?.state}
         />
 
         <label htmlFor="pincode" className="mb-1 font-semibold text-gray-700">
@@ -144,7 +129,7 @@ const AddressForm = () => {
           id="pincode"
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.pincode}
+          value={formData?.pincode}
         />
 
         <label htmlFor="phone" className="mb-1 font-semibold text-gray-700">
@@ -156,7 +141,7 @@ const AddressForm = () => {
           id="phone"
           className="rounded-md border border-purple-400 px-2 py-1 mb-3 text-[14px] outline-0"
           onChange={handleFormData}
-          value={formData.phone}
+          value={formData?.phone}
         />
 
         <div className="mt-3">

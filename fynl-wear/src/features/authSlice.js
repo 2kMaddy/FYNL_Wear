@@ -5,6 +5,7 @@ import {
   authoriseUser,
   logOutUser,
 } from "../services/userServices";
+import { getAddress } from "../services/addressServices";
 
 // Create user
 export const fetchCreateUser = createAsyncThunk(
@@ -67,6 +68,8 @@ export const fetchLogOutUser = createAsyncThunk(
     }
   }
 );
+
+// Get user address
 
 const initialState = {
   user: {},

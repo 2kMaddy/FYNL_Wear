@@ -6,6 +6,7 @@ import priceFormatter from "../utils/priceFormatter";
 import { PrimaryLoader } from "../components/Loader";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ButtonBG } from "../components/Button";
+import SummaryCard from "../components/SummaryCard";
 
 const Cart = () => {
   // Hooks
@@ -79,14 +80,6 @@ const Cart = () => {
       navigate("/place-order", { state: { selectedItems } });
     }
   };
-
-  const subtotal = selectedItems?.reduce(
-    (acc, item) => acc + Number(item?.product?.price) * item.quantity,
-    0
-  );
-
-  const deliveryCharges = subtotal === 0 ? 0 : 40;
-  const total = subtotal + deliveryCharges;
 
   return (
     <div className="flex flex-col items-center gap-5 p-3 md:p-5  bg-purple-100 min-h-dvh">
@@ -162,12 +155,22 @@ const Cart = () => {
                             <span className="font-semibold">{item?.color}</span>
                           </p>
                         </div>
-                        <p>
-                          Price:{" "}
-                          <span className="font-semibold">
+                        <div className="flex flex-row items-center gap-4">
+                          <p>
+                            Price:{" "}
+                            <span className="font-semibold">
+                              {priceFormatter(
+                                Number(item?.product?.discountPrice) || 0
+                              )}
+                            </span>
+                          </p>
+                          <p className="italic text-[12px] text-[#333] line-through">
                             {priceFormatter(Number(item?.product?.price) || 0)}
-                          </span>
-                        </p>
+                          </p>
+                          <p className="text-[#af5cf7]">{`(${
+                            item?.product?.discountPer || 0
+                          }% off)`}</p>
+                        </div>
                       </div>
                       {/* Quantity & Remove button */}
                       <div className="flex w-full md:w-fit flex-col gap-3 items-center md:items-end">
@@ -235,22 +238,7 @@ const Cart = () => {
             Your Order
           </h2>
           <hr className="border border-gray-400" />
-          <div className="flex justify-between text-[14px]">
-            <p className="text-gray-600 font-semibold">
-              Subtotal ({selectedItems.length || 0} items)
-            </p>
-            <p className="font-bold">{priceFormatter(subtotal)}</p>
-          </div>
-
-          <div className="flex justify-between text-[14px]">
-            <p className="text-gray-600 font-semibold">Delivery Charges</p>
-            <p className="font-bold">{priceFormatter(deliveryCharges)}</p>
-          </div>
-
-          <div className="flex justify-between text-[14px]">
-            <p className="text-gray-600 font-semibold">Total</p>
-            <p className="font-bold">{priceFormatter(total)}</p>
-          </div>
+          <SummaryCard items={selectedItems} />
           <ButtonBG text="Check out" width="w-full" onClick={handleCheckout} />
         </div>
       </div>
