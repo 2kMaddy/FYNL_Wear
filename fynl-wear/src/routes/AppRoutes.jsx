@@ -6,6 +6,7 @@ import ProductDetail from "../pages/ProductDetail.jsx";
 import AuthForm from "../components/AuthForm.jsx";
 import Cart from "../pages/Cart.jsx";
 import PlaceOrder from "../pages/PlaceOrder.jsx";
+import MyOrders from "../pages/MyOrders.jsx";
 
 const AppRoutes = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const AppRoutes = createBrowserRouter([
       {
         path: "place-order",
         element: <PlaceOrder />,
+      },
+      {
+        path: "my-orders",
+        element: <MyOrders />,
       },
     ],
   },

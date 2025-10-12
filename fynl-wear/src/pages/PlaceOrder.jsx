@@ -9,6 +9,7 @@ import { fetchCreateOrder } from "../features/orderSlice";
 import getSubTotal from "../utils/getSubTotal";
 import { fetchShippingAddress } from "../features/addressSlice";
 import { paymentVerification } from "../services/orderServices";
+import { PaymentFailed, PaymentSuccess } from "../components/PaymentResponse";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const PlaceOrder = () => {
   const navigate = useNavigate();
 
   const [isAddressConfirmed, setIsAddressConfirmed] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentFailed, setPaymentFailed] = useState(false);
 
   const { selectedItems } = location.state || { selectedItems: [] };
 
@@ -61,10 +64,9 @@ const PlaceOrder = () => {
           };
           const verifyRes = await paymentVerification(verifyPayload);
           if (verifyRes.data.success) {
-            alert("Payment Successful");
-            navigate("/my-orders"); // Added navigation here
+            setPaymentSuccess(true);
           } else {
-            alert("Payment Failed");
+            setPaymentFailed(true);
           }
         },
         theme: { color: "#3399cc" },
@@ -131,7 +133,11 @@ const PlaceOrder = () => {
               </div>
             </li>
           ))}
-          {selectedItems.length === 0 && <li>No items selected.</li>}
+          {selectedItems.length === 0 && (
+            <p className="flex justify-center items-center font-bold text-[#333] text-2xl h-[60vh] w-full">
+              No items selected.
+            </p>
+          )}
         </ul>
         {/* Confirm address form */}
         <div className="flex flex-col gap-8">
@@ -155,6 +161,8 @@ const PlaceOrder = () => {
           )}
         </div>
       </div>
+      {paymentSuccess && <PaymentSuccess />}
+      {paymentFailed && <PaymentFailed />}
     </div>
   );
 };

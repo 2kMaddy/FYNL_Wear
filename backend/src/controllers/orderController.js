@@ -7,7 +7,7 @@ export const createOrder = async (req, res) => {
   try {
     const { totalAmount } = req.body;
     const options = {
-      amount: Math.floor(totalAmount * 100),
+      amount: Math.floor(totalAmount / 10),
       currency: "INR",
       receipt: `receipt_order_${Math.floor(Math.random() * 10000)}`,
     };
@@ -122,6 +122,33 @@ export const verifyPayment = async (req, res) => {
     res.status(400).json({
       status: "failed",
       message: "Payment verification failed",
+    });
+  }
+};
+
+export const getOrdersById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const orders = await Order.find({ userId });
+
+    if (!orders) {
+      return res.status(200).json({
+        success: true,
+        message: "No orders found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Orders fetched successfully",
+      data: orders,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch orders",
+      error: error.message,
     });
   }
 };

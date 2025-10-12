@@ -172,6 +172,17 @@ const Cart = () => {
                           }% off)`}</p>
                         </div>
                       </div>
+                      {/* Item total */}
+                      <div>
+                        <p>
+                          Item total:{" "}
+                          <span className="font-bold">
+                            {priceFormatter(
+                              item?.product?.price * item.quantity
+                            )}
+                          </span>
+                        </p>
+                      </div>
                       {/* Quantity & Remove button */}
                       <div className="flex w-full md:w-fit flex-col gap-3 items-center md:items-end">
                         <div className="flex flex-row gap-3 items-center">

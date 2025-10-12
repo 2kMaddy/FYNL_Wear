@@ -5,3 +5,6 @@ export const createOrder = (orderObject) =>
 
 export const paymentVerification = (response) =>
   api.post("/order/verify-payment", response);
+
+export const getOrdersById = (userId) =>
+  api.get(`/order/get-order-by-id/${userId}`);

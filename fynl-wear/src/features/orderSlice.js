@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   isRejectedWithValue,
 } from "@reduxjs/toolkit";
-import { createOrder } from "../services/orderServices";
+import { createOrder, getOrdersById } from "../services/orderServices";
 
 export const fetchCreateOrder = createAsyncThunk(
   "order/createOrder",
@@ -15,6 +15,21 @@ export const fetchCreateOrder = createAsyncThunk(
       console.log(error.message);
       return rejectWithValue(
         error.response?.data?.message || "Create order failed"
+      );
+    }
+  }
+);
+
+export const fetchGetOrderById = createAsyncThunk(
+  "order/getOrderById",
+  async ({ userId }, { rejectWithValue }) => {
+    try {
+      const response = await getOrdersById(userId);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error?.response?.data?.message || "Get orders failed"
       );
     }
   }
@@ -42,13 +57,22 @@ const orderSlice = createSlice({
       state.error = action.payload;
     };
     builder
+      // Create order
       .addCase(fetchCreateOrder.pending, commonPending)
       .addCase(fetchCreateOrder.fulfilled, (state, action) => {
         state.orderList = action.payload.data;
         state.loading = false;
         state.error = null;
       })
-      .addCase(fetchCreateOrder.rejected, commonReject);
+      .addCase(fetchCreateOrder.rejected, commonReject)
+
+      // Get order by id
+      .addCase(fetchGetOrderById.pending, commonPending)
+      .addCase(fetchGetOrderById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.orderList = action.payload.data;
+      });
   },
 });
 
