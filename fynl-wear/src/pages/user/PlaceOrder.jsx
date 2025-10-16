@@ -1,15 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import priceFormatter from "../utils/priceFormatter";
-import AddressForm from "../components/AddressForm";
-import { BackButton, ButtonBG } from "../components/Button";
+import priceFormatter from "../../utils/priceFormatter";
+import AddressForm from "../../components/AddressForm";
+import { BackButton, ButtonBG } from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import SummaryCard from "../components/SummaryCard";
-import { fetchCreateOrder } from "../features/orderSlice";
-import getSubTotal from "../utils/getSubTotal";
-import { fetchShippingAddress } from "../features/addressSlice";
-import { paymentVerification } from "../services/orderServices";
-import { PaymentFailed, PaymentSuccess } from "../components/PaymentResponse";
+import SummaryCard from "../../components/SummaryCard";
+import { fetchCreateOrder } from "../../features/orderSlice";
+import getSubTotal from "../../utils/getSubTotal";
+import { fetchShippingAddress } from "../../features/addressSlice";
+import { paymentVerification } from "../../services/orderServices";
+import { PaymentFailed, PaymentSuccess } from "../../components/PaymentResponse";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();

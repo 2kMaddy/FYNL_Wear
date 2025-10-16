@@ -10,7 +10,7 @@ export const fetchShippingAddress = createAsyncThunk(
     } catch (error) {
       console.log(error.message);
       return rejectWithValue(
-        error.response?.data?.message || "Get shipping address failed"
+        
       );
     }
   }

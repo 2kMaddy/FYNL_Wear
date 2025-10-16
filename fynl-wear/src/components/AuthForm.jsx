@@ -16,7 +16,6 @@ const AuthForm = ({ formType }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
 
-  const user = useSelector((state) => state.auth.user);
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.loading);
   const isAuthorised = useSelector((state) => state.auth.isAuthenticated);
@@ -149,6 +148,9 @@ const AuthForm = ({ formType }) => {
             width="w-full"
           />
         </div>
+        {error && error !== "unauthorized" && (
+          <p className="text-red-600 italic text-[14px]">{error}</p>
+        )}
       </form>
       {/* <div className="flex flex-row items-center w-full gap-1">
         <hr className="w-full" />

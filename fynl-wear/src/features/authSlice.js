@@ -124,7 +124,11 @@ const authSlice = createSlice({
         state.error = null;
         state.isAuthenticated = true;
       })
-      .addCase(fetchAuthoriseUser.rejected, commonReject)
+      .addCase(fetchAuthoriseUser.rejected, (state, action) => {
+        state.user = {};
+        state.isAuthenticated = false;
+        state.loading = false;
+      })
 
       // Log out user
       .addCase(fetchLogOutUser.pending, commonPending)

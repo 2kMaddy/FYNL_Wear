@@ -5,11 +5,12 @@ import { PrimaryLoader } from "./Loader";
 
 const AuthWrapper = ({ children }) => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const checkAuth = async () => {
+      setIsLoading(true);
       await dispatch(fetchAuthoriseUser());
       setIsLoading(false);
     };

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchProductById } from "../features/productSlice";
+import { fetchProductById } from "../../features/productSlice";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import priceFormatter from "../utils/priceFormatter";
-import { ButtonBG, ButtonNoBG, BackButton } from "../components/Button";
-import { PrimaryLoader } from "../components/Loader";
-import useCartAction from "../hooks/useCartAction";
+import priceFormatter from "../../utils/priceFormatter";
+import { ButtonBG, ButtonNoBG, BackButton } from "../../components/Button";
+import { PrimaryLoader } from "../../components/Loader";
+import useCartAction from "../../hooks/useCartAction";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();

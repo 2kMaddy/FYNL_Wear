@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useCartAction from "../hooks/useCartAction";
-import { deleteCartItemState, fetchGetCart } from "../features/cartSlice";
-import priceFormatter from "../utils/priceFormatter";
-import { PrimaryLoader } from "../components/Loader";
+import useCartAction from "../../hooks/useCartAction";
+import { deleteCartItemState, fetchGetCart } from "../../features/cartSlice";
+import priceFormatter from "../../utils/priceFormatter";
+import { PrimaryLoader } from "../../components/Loader";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ButtonBG } from "../components/Button";
-import SummaryCard from "../components/SummaryCard";
+import { ButtonBG } from "../../components/Button";
+import SummaryCard from "../../components/SummaryCard";
 
 const Cart = () => {
   // Hooks

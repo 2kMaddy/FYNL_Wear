@@ -1,17 +1,26 @@
 import { createBrowserRouter } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
-import Home from "../pages/Home.jsx";
-import Products from "../pages/Products.jsx";
-import ProductDetail from "../pages/ProductDetail.jsx";
+import Home from "../pages/user/Home.jsx";
+import Products from "../pages/user/Products.jsx";
+import ProductDetail from "../pages/user/ProductDetail.jsx";
 import AuthForm from "../components/AuthForm.jsx";
-import Cart from "../pages/Cart.jsx";
-import PlaceOrder from "../pages/PlaceOrder.jsx";
-import MyOrders from "../pages/MyOrders.jsx";
+import Cart from "../pages/user/Cart.jsx";
+import PlaceOrder from "../pages/user/PlaceOrder.jsx";
+import MyOrders from "../pages/user/MyOrders.jsx";
+
+import AdminLogin from "../pages/admin/AdminLogin.jsx";
+import Dashboard from "../pages/admin/Dashboard.jsx";
+import AdminNavbar from "../components/AdminNavbar.jsx";
+import AuthWrapper from "../components/Authwrapper.jsx";
 
 const AppRoutes = createBrowserRouter([
   {
     path: "/",
-    element: <UserLayout />,
+    element: (
+      <AuthWrapper>
+        <UserLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: "/",
@@ -44,6 +53,20 @@ const AppRoutes = createBrowserRouter([
       {
         path: "my-orders",
         element: <MyOrders />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminNavbar />,
+    children: [
+      {
+        path: "login",
+        element: <AdminLogin />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
       },
     ],
   },

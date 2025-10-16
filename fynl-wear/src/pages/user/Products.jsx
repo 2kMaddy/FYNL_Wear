@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "../features/productSlice";
+import { fetchAllProducts } from "../../features/productSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
-import Sort from "../components/Sort";
-import productSort from "../constants/productSort";
-import categorySort from "../constants/categorySort";
-import Pagination from "../components/Pagination";
-import { PrimaryLoader } from "../components/Loader";
-import { BackButton } from "../components/Button";
+import ProductCard from "../../components/ProductCard";
+import Sort from "../../components/Sort";
+import productSort from "../../constants/productSort";
+import categorySort from "../../constants/categorySort";
+import Pagination from "../../components/Pagination";
+import { PrimaryLoader } from "../../components/Loader";
+import { BackButton } from "../../components/Button";
 
 const Products = () => {
   const dispatch = useDispatch();

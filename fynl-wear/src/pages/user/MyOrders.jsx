@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchGetOrderById } from "../features/orderSlice";
+import { fetchGetOrderById } from "../../features/orderSlice";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
