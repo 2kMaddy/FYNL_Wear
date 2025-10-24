@@ -10,7 +10,9 @@ import MyOrders from "../pages/user/MyOrders.jsx";
 
 import AdminLogin from "../pages/admin/AdminLogin.jsx";
 import Dashboard from "../pages/admin/Dashboard.jsx";
-import AdminNavbar from "../components/AdminNavbar.jsx";
+import AdminProducts from "../pages/admin/AdminProducts.jsx";
+import AdminLayout from "../layout/AdminLayout.jsx";
+
 import AuthWrapper from "../components/Authwrapper.jsx";
 
 const AppRoutes = createBrowserRouter([
@@ -58,7 +60,7 @@ const AppRoutes = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminNavbar />,
+    element: <AdminLayout />,
     children: [
       {
         path: "login",
@@ -67,6 +69,10 @@ const AppRoutes = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "products",
+        element: <AdminProducts />,
       },
     ],
   },
